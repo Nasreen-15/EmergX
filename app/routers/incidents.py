@@ -68,15 +68,41 @@ def get_active_incidents(
 def get_incident_by_id(
     id: int,
     db: Session = Depends(get_db),
-    privileged_user: models.User = Depends(check_role(["Admin", "Security"]))
+    current_user_obj: models.User = Depends(get_current_user_obj)
 ):
     alert = crud.get_sos_alert_by_id(db, id)
+
     if not alert:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Incident not found"
         )
-    return alert
+
+    # Get current user's roles
+    roles = db.query(models.Role.role_name).join(models.UserRole).filter(
+        models.UserRole.user_id == current_user_obj.id
+    ).all()
+
+    user_roles = [r[0].lower() for r in roles]
+
+    # Admin and Security can view any incident
+    if "admin" in user_roles or "security" in user_roles:
+        return alert
+
+    # Residents can view only their own incidents
+    if "resident" in user_roles:
+        if alert.resident_id != current_user_obj.id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="You can only view your own incidents"
+            )
+        return alert
+
+    # Everyone else is denied
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="Access forbidden"
+    )
 
 
 # PATCH STATUS OF AN INCIDENT (Responder, Security, Admin)
