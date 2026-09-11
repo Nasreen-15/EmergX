@@ -1023,6 +1023,9 @@ def create_sos_alert(
         res_user = get_user_by_id(db, resident_id)
         res_name = f"{res_user.first_name} {res_user.last_name}" if res_user else f"Resident #{resident_id}"
         log_timeline_event(db, db_alert.id, "SOS Created", res_name)
+	
+	                # Send notifications to guardian, security and available volunteers
+        send_sos_notifications(db, db_alert)
 
         return db_alert
     except Exception as e:
@@ -1453,4 +1456,4 @@ def get_incident_reports(db: Session):
         "incidents": reports
     }
 
-
+
