@@ -13,7 +13,7 @@ def seed_db():
     db = SessionLocal()
     try:
         # 1. Seed Roles
-        role_names = ["ADMIN", "RESIDENT", "SECURITY", "GUARDIAN", "VOLUNTEER", "Admin", "Resident", "Security", "Guardian", "Volunteer"]
+        role_names = ["ADMIN", "RESIDENT", "SECURITY", "GUARDIAN", "VOLUNTEER"]
         role_map = {}
         for name in role_names:
             r = db.query(models.Role).filter_by(role_name=name).first()
@@ -33,7 +33,7 @@ def seed_db():
                 "last_name": "Admin",
                 "phone": "000-000-0001",
                 "password": "Admin@123",
-                "roles": ["ADMIN", "Admin"]
+                "roles": ["ADMIN"]
             },
             {
                 "email": "admin@example.com",
@@ -41,7 +41,7 @@ def seed_db():
                 "last_name": "Admin",
                 "phone": "000-000-0099",
                 "password": "password123",
-                "roles": ["ADMIN", "Admin"]
+                "roles": ["ADMIN"]
             },
             {
                 "email": "resident@test.com",
@@ -49,7 +49,7 @@ def seed_db():
                 "last_name": "Resident",
                 "phone": "000-000-0002",
                 "password": "Resident@123",
-                "roles": ["RESIDENT", "Resident"]
+                "roles": ["RESIDENT"]
             },
             {
                 "email": "alice.smith@example.com",
@@ -57,7 +57,7 @@ def seed_db():
                 "last_name": "Smith",
                 "phone": "000-000-0010",
                 "password": "password123",
-                "roles": ["RESIDENT", "Resident"]
+                "roles": ["RESIDENT"]
             },
             {
                 "email": "security@test.com",
@@ -65,7 +65,7 @@ def seed_db():
                 "last_name": "Security",
                 "phone": "000-000-0003",
                 "password": "Security@123",
-                "roles": ["SECURITY", "Security"]
+                "roles": ["SECURITY"]
             },
             {
                 "email": "guard.marcus@example.com",
@@ -73,7 +73,7 @@ def seed_db():
                 "last_name": "Marcus",
                 "phone": "000-000-0011",
                 "password": "password123",
-                "roles": ["SECURITY", "Security"]
+                "roles": ["SECURITY"]
             },
             {
                 "email": "guardian@test.com",
@@ -81,7 +81,7 @@ def seed_db():
                 "last_name": "Guardian",
                 "phone": "000-000-0004",
                 "password": "Guardian@123",
-                "roles": ["GUARDIAN", "Guardian"]
+                "roles": ["GUARDIAN"]
             },
             {
                 "email": "volunteer@test.com",
@@ -89,7 +89,7 @@ def seed_db():
                 "last_name": "Volunteer",
                 "phone": "000-000-0005",
                 "password": "Volunteer@123",
-                "roles": ["VOLUNTEER", "Volunteer"]
+                "roles": ["VOLUNTEER"]
             },
             {
                 "email": "clara.o@example.com",
@@ -97,7 +97,7 @@ def seed_db():
                 "last_name": "Oswald",
                 "phone": "000-000-0012",
                 "password": "password123",
-                "roles": ["VOLUNTEER", "Volunteer"]
+                "roles": ["VOLUNTEER"]
             }
         ]
 
@@ -235,3 +235,4 @@ def seed_db():
 
 if __name__ == "__main__":
     seed_db()
+
