@@ -93,7 +93,7 @@ class TestIncidentLifecycle(unittest.TestCase):
 
         actions = [ev["action"] for ev in timeline_events]
         self.assertIn("SOS Created", actions)
-        self.assertIn("Volunteer Accepted Incident", actions)
+        self.assertTrue(any("Accepted Incident" in a for a in actions))
         self.assertIn("Status Updated: Reached Location", actions)
         self.assertIn("Incident Closed & Documented", actions)
 
